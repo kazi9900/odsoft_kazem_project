@@ -1,0 +1,97 @@
+<div class="position-relative">
+  <div class="row m-0 p-0 lista-item border-bottom"
+       [ngClass]="{'lista-item-selected': contributeService.sentenceSelect === item,
+                 'lista-item-disabled': contributeService.sentenceSelect && contributeService.sentenceSelect !== item}"
+       *ngIf="item.text">
+    <div class="col d-flex align-items-center">
+      <span>{{item.text}}</span>
+    </div>
+    <div class="col-1 d-flex align-items-center p-0 border-left border-right d-flex justify-content-center align-items-center">
+      <div class="btn-group"
+           role="group">
+        <button [ngClass]="{'invisible': !item.lastSentenceTranslation || !isEditor}"
+                type="button"
+                class="btn btn-outline-dark btn-sm"
+                (click)="onClickDeleteTranslation()">
+          <i class="fa fa-trash"
+             aria-hidden="true"></i>
+        </button>
+        <button [ngClass]="{'invisible': !item.lastSentenceTranslation || !isEditor}"
+                type="button"
+                class="btn btn-outline-dark btn-sm"
+                (click)="onClickEditTranslation()">
+          <i class="fa fa-pencil-square"
+             aria-hidden="true"></i>
+        </button>
+        <button type="button"
+                class="btn btn-outline-dark btn-sm"
+                (click)="onClickNewTranslation()">
+          <i class="fa fa-plus-square"
+             aria-hidden="true"></i>
+        </button>
+      </div>
+    </div>
+    <div class="col d-flex align-items-center">
+      <span *ngIf="!form && item.lastSentenceTranslation">{{item.lastSentenceTranslation?.text}}</span>
+      <span *ngIf="!form && item.lastSentenceTranslation"
+            class="badge badge-primary ml-auto">{{item?.countTranslations}}</span>
+      <div *ngIf="form"
+           [formGroup]="form"
+           class="d-flex w-100 py-1">
+        <button class="btn btn-outline-danger btn-sm border-right-radius-0"
+                (click)="onCancel()">
+          <i class="fa fa-times" aria-hidden="true"></i>
+        </button>
+        <textarea class="form-control rounded-0"
+                  formControlName="text"
+                  placeholder="{{ 'ContributeComponent.Label.InsertTranslation' | translate }}">
+      </textarea>
+        <button class="btn btn-outline-success btn-sm border-left-radius-0"
+                (click)="onSave()">
+          <i class="fa fa-check" aria-hidden="true"></i>
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+  <div #row
+       class="row m-0 p-0 d-flex align-items-center lista-item border-bottom"
+       [ngClass]="{'lista-item-selected': contributeService.sentenceSelect === item,
+                 'lista-item-disabled': contributeService.sentenceSelect && contributeService.sentenceSelect !== item}"
+       *ngIf="!item.text && form"
+       [formGroup]="form">
+
+    <div class="col">
+      <textarea class="form-control"
+                formControlName="textL1"
+                placeholder="{{ 'ContributeComponent.Label.InsertSentence' | translate }}">
+      </textarea>
+    </div>
+    <div class="col-1 p-0 border-left border-right d-flex justify-content-center align-items-center">
+
+      <button class="btn btn-outline-danger btn-sm mr-1"
+              (click)="onCancel()">
+        <i class="fa fa-times" aria-hidden="true"></i>
+      </button>
+      <button class="btn btn-outline-success btn-sm ml-2"
+              (click)="onSave()">
+        <i class="fa fa-check" aria-hidden="true"></i>
+      </button>
+
+    </div>
+    <div class="col">
+      <div class="d-flex py-1">
+        <textarea class="form-control"
+                  formControlName="textL2"
+                  placeholder="{{ 'ContributeComponent.Label.InsertTranslation' | translate }}">
+        </textarea>
+      </div>
+    </div>
+  </div>
+
+  <ngx-spinner [fullScreen]="false"
+               [name]="id"
+               type="ball-pulse-sync"
+               size="small"></ngx-spinner>
+</div>

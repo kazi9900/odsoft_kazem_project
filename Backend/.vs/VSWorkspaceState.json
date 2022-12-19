@@ -1,0 +1,17 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\PC4MT",
+    "\\PC4MT\\PC4MT",
+    "\\PC4MT\\PC4MT.BLL",
+    "\\PC4MT\\PC4MT.BLL\\ViewModels",
+    "\\PC4MT\\PC4MT.BLL\\ViewModels\\Light",
+    "\\PC4MT\\PC4MT.DAL",
+    "\\PC4MT\\PC4MT.DAL\\Context",
+    "\\PC4MT\\PC4MT.DAL\\Context\\Seed",
+    "\\PC4MT\\PC4MT.DAL\\Data",
+    "\\PC4MT\\PC4MT.DAL\\Data\\Models"
+  ],
+  "SelectedNode": "\\PC4MT\\PC4MT\\appsettings.json",
+  "PreviewInSolutionExplorer": false
+}

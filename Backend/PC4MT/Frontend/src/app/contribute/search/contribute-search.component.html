@@ -1,0 +1,62 @@
+<div class="row m-0 px-2">
+  <!-- L1 -->
+  <div class="col p-0 d-flex">
+    <dx-select-box class="form-control"
+                   [dataSource]="contributeService?.languagesList"
+                   valueExpr="id"
+                   displayExpr="name"
+                   placeholder="{{ 'Shared.Label.SelectLanguage' | translate }}"
+                   [showClearButton]="true"
+                   [formControl]="language1Control">
+    </dx-select-box>
+  </div>
+
+  <div class="col-1 d-flex align-items-end justify-content-center">
+    <i class="fa fa-arrow-circle-right fa-2x text-color" aria-hidden="true"> </i>
+  </div>
+
+  <!-- L2's -->
+  <div class="col p-0 d-flex">
+    <dx-tag-box class="form-control"
+                [dataSource]="[contributeService?.languagesList, language1Control.value] | functionCall:removeLanguage1:this"
+                valueExpr="id"
+                displayExpr="name"
+                placeholder="{{ 'Shared.Label.SelectLanguages' | translate }}"
+                [showSelectionControls]="true"
+                applyValueMode="useButtons"
+                [formControl]="contributeService?.languagesL2Control">
+    </dx-tag-box>
+  </div>
+</div>
+
+<div class="row m-0 p-2">
+  <div class="col p-0">
+    <input class="form-control"
+           type="text"
+           placeholder="{{ 'Shared.Label.Search' | translate }}"
+           [formControl]="searchSentenceL1Control">
+  </div>
+  <div class="col-1"></div>
+  <div class="col p-0">
+    <input class="form-control"
+           type="text"
+           placeholder="{{ 'Shared.Label.Search' | translate }}"
+           [formControl]="searchSentenceL2Control">
+  </div>
+</div>
+
+<div class="height-list w-100 pl-2 pr-scroll position-relative">
+  <virtual-scroller #scroll
+                    class="h-100 w-100"
+                    [ngClass]="{'overflow-hidden': contributeService.sentenceSelect}"
+                    [items]="[listSearch, contributeService.languagesL2Control.value, searchSentenceL1Control.value, searchSentenceL2Control.value] | functionCall:filtrarLista:this">
+
+    <app-contribute-search-lista-item *ngFor="let item of scroll.viewPortItems;"
+                                      [item]="item"
+                                      [searchSentenceL2]="searchSentenceL2Control.value">
+    </app-contribute-search-lista-item>
+  </virtual-scroller>
+
+  <ngx-spinner [fullScreen]="false"
+               type="ball-clip-rotate-pulse"></ngx-spinner>
+</div>

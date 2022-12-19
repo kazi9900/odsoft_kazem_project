@@ -1,0 +1,51 @@
+<div class="container-signin-signup h-100">
+  <div class="row h-100">
+    <div class="d-none d-md-block col-md-3 h-100">
+
+    </div>
+    <div class="col-12 col-md-9 register-right h-100">
+      <div class="row col-12 justify-content-end m-0 p-0">
+        <ul class="nav nav-tabs nav-justified" id="myTab" role="tablist">
+          <li class="nav-item">
+            <a class="nav-link active"
+               id="signin-tab"
+               data-toggle="tab"
+               href="#signin"
+               role="tab"
+               aria-controls="signin"
+               aria-selected="true"
+               (click)="resetSignUpForm()">{{ 'SignInSignUpComponent.Label.SignIn' | translate }}</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link"
+               id="singup-tab"
+               data-toggle="tab"
+               href="#singup"
+               role="tab"
+               aria-controls="singup"
+               aria-selected="false"
+               (click)="resetSignInForm()">{{ 'SignInSignUpComponent.Label.SignUp' | translate }}</a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="tab-content"
+           id="signin-tab">
+        <div class="tab-pane fade show active"
+             id="signin"
+             role="tabpanel"
+             aria-labelledby="signin-tab">
+          <app-signin-form></app-signin-form>
+        </div>
+
+        <div class="tab-pane fade show"
+             id="singup"
+             role="tabpanel"
+             aria-labelledby="singup-tab">
+          <app-signup-form></app-signup-form>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

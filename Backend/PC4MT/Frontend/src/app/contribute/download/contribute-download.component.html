@@ -1,0 +1,68 @@
+<div class="row m-0 px-2">
+  <!-- L1 -->
+  <div class="col p-0 d-flex">
+    <dx-select-box class="form-control"
+                   [dataSource]="[contributeService?.languagesList, language2Control.value] | functionCall:removeLanguage:this"
+                   valueExpr="id"
+                   displayExpr="name"
+                   placeholder="{{ 'Shared.Label.SelectLanguage' | translate }}"
+                   [showClearButton]="true"
+                   [formControl]="language1Control">
+    </dx-select-box>
+  </div>
+
+  <div class="col-1 d-flex align-items-end justify-content-center">
+    <i class="fa fa-arrow-circle-right fa-2x text-color" aria-hidden="true"> </i>
+  </div>
+
+  <!-- L2 -->
+  <div class="col p-0 d-flex">
+    <dx-select-box class="form-control"
+                   [dataSource]="[contributeService?.languagesList, language1Control.value] | functionCall:removeLanguage:this"
+                   valueExpr="id"
+                   displayExpr="name"
+                   placeholder="{{ 'Shared.Label.SelectLanguage' | translate }}"
+                   [showClearButton]="true"
+                   [formControl]="language2Control">
+    </dx-select-box>
+  </div>
+</div>
+
+<div class="row m-0 p-2">
+  <div class="col p-0">
+    <input class="form-control"
+           type="text"
+           placeholder="{{ 'Shared.Label.Search' | translate }}"
+           [formControl]="searchL1Control">
+  </div>
+  <div class="col-1">
+    <button class="btn btn-primary w-100"
+            (click)="onExportFile()"
+            [disabled]="listTranslationsToExportFiltered.length === 0">
+      <i class="fa fa-download" aria-hidden="true"></i>
+
+    </button>
+  </div>
+  <div class="col p-0">
+    <input class="form-control"
+           type="text"
+           placeholder="{{ 'Shared.Label.Search' | translate }}"
+           [formControl]="searchL2Control">
+  </div>
+</div>
+
+<div class="height-list w-100 pl-2 pr-scroll position-relative">
+  <virtual-scroller #scroll
+                    class="h-100 w-100"
+                    [items]="listTranslationsToExportFiltered">
+    <div *ngFor="let item of scroll.viewPortItems;"
+         class="row m-0 lista-item white-background">
+      <div class="col d-flex border-bottom align-items-center">{{item?.sentenceL1}}</div>
+      <div class="col-1 border-left border-right border-bottom"></div>
+      <div class="col d-flex border-bottom align-items-center">{{item?.sentenceL2}}</div>
+    </div>
+  </virtual-scroller>
+
+  <ngx-spinner [fullScreen]="false"
+               type="ball-clip-rotate-pulse"></ngx-spinner>
+</div>

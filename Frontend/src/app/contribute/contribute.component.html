@@ -1,0 +1,46 @@
+<div class="container-contribute">
+  <div class="row m-0 p-2">
+    <dx-select-box *ngIf="isAuthenticate && !isBusy && !router.url.includes('contribute/projects')"
+                   class="form-control col-3"
+                   [dataSource]="contributeService?.projectsList | functionCall:filterProjects:this"
+                   valueExpr="id"
+                   displayExpr="name"
+                   [showClearButton]="true"
+                   placeholder="{{ 'Shared.Label.SelectProject' | translate }}"
+                   [formControl]="contributeService.projectControl">
+    </dx-select-box>
+
+    <div class="btn-group ml-auto"
+         role="group">
+      <button type="button"
+              class="btn btn-secondary"
+              [ngClass]="{'active': router.url.includes('contribute/translate')}"
+              (click)="onOpenPage('translate')">
+        {{ 'Shared.Label.Translate' | translate }}
+      </button>
+      <button *ngIf="credentialsService.isAuthenticated()"
+              type="button"
+              class="btn btn-secondary"
+              [ngClass]="{'active': router.url.includes('contribute/projects')}"
+              (click)="onOpenPage('projects')">
+        {{ 'Shared.Label.Projects' | translate }}
+      </button>
+      <button type="button"
+              class="btn btn-secondary"
+              [ngClass]="{'active': router.url.includes('contribute/search')}"
+              (click)="onOpenPage('search')">
+        {{ 'Shared.Label.Search' | translate }}
+      </button>
+      <button *ngIf="credentialsService.isAuthenticated()"
+              type="button"
+              class="btn btn-secondary"
+              [ngClass]="{'active': router.url.includes('contribute/download')}"
+              (click)="onOpenPage('download')">
+        {{ 'Shared.Label.Download' | translate }}
+      </button>
+    </div>
+  </div>
+
+  <router-outlet></router-outlet>
+</div>
+

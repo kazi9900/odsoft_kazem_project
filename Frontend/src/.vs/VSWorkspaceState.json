@@ -1,0 +1,15 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\app",
+    "\\app\\contribute",
+    "\\app\\contribute\\projects",
+    "\\app\\core",
+    "\\app\\core\\interceptors",
+    "\\app\\core\\services",
+    "\\app\\shared",
+    "\\environments"
+  ],
+  "SelectedNode": "\\environments\\environment.ts",
+  "PreviewInSolutionExplorer": false
+}

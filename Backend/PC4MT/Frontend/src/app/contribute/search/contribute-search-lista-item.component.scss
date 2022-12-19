@@ -1,0 +1,23 @@
+.column-l1 {
+  width: 40%;
+}
+
+.column-l2 {
+  width: 60%;
+}
+
+
+.lista-item {
+  min-height: 50px;
+  cursor: context-menu;
+  border-left: 2px solid transparent;
+}
+
+.lista-item:hover {
+  background: #e6fff7;
+}
+
+.lista-item-selected {
+  border-left: 2px solid #198dc8;
+  background: #e6fff7;
+}

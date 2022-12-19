@@ -1,0 +1,31 @@
+
+.container-home {
+  padding-left: 10%;
+  padding-right: 10%;
+  padding-bottom: 30px;
+  overflow-y: auto;
+  height: 100%;
+}
+
+.title {
+  font-display: initial;
+  font-size-adjust:initial;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  padding-top: 100px;
+  font-style: italic;
+  margin-bottom: 50px;
+  font-size: 45px;
+  color: #FF851B;
+  opacity: 0.8;
+  transform: initial;
+}
+
+article {
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  margin-top: 30px;
+  color: wheat;
+  opacity: 0.8;
+  text-align: justify;
+  font-size: 22px;  
+  font-style: normal;
+}

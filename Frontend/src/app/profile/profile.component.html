@@ -1,0 +1,184 @@
+<div class="register h-100">
+  <div class="row h-100">
+    <div class="d-none d-md-block col-md-3 h-100">
+
+    </div>
+
+    <div class="col-12 col-md-9 register-right h-100">
+      <div class="container-form" *ngIf="form">
+        <h3 class="text-center">
+          {{ 'NavBarComponent.Label.Profile' | translate}}
+        </h3>
+        <div class="row"
+             [formGroup]="form">
+          <!-- Name -->
+          <div class="col-12">
+            <div class="form-group">
+              <label>{{ 'Shared.Label.Name' | translate }}</label>
+              <input class="form-control"
+                     type="text"
+                     formControlName="name"
+                     placeholder="{{ 'Shared.Label.Name' | translate }}" />
+              <div *ngIf="isFormSubmitted && form.get('name').hasError('required')"
+                   class="alert alert-danger mt-1 p-1">
+                {{ 'Shared.Message.RequiredField' | translate }}
+              </div>
+            </div>
+          </div>
+
+          <!-- Email -->
+          <div class="col-12">
+            <div class="form-group">
+              <label>{{ 'Shared.Label.Email' | translate }}</label>
+              <input class="form-control"
+                     type="text"
+                     formControlName="email"
+                     placeholder="{{ 'Shared.Label.Email' | translate }}">
+            </div>
+          </div>
+
+          <!-- Password -->
+          <div class="col-12">
+            <div class="form-group d-flex align-items-center">
+              <label>{{ 'Shared.Label.Password' | translate }}</label>
+              <button type="button"
+                      class="btn btn-outline-primary ml-auto"
+                      (click)="openFormChangePassword()">
+                {{ 'ProfileComponent.Label.ChangePassword' | translate }}
+              </button>
+            </div>
+          </div>
+
+          <!-- Proficiency Languages -->
+          <div class="col-12 form-group">
+            <div class="border-header">
+              <div class="d-flex align-items-center p-2">
+                <label class="m-0">{{ 'Shared.Label.ProficiencyLanguages' | translate }}</label>
+                <button type="button"
+                        class="btn btn-outline-primary ml-auto"
+                        (click)="addProficiencyLanguage()"
+                        [disabled]="form?.get('proficiencyLanguages')?.invalid">
+                  {{ 'Shared.Label.Add' | translate }}
+                </button>
+              </div>
+
+              <div formArrayName="proficiencyLanguages">
+                <div *ngFor="let item of formArrayProficiencyLanguagesControls(); let i = index;"
+                     [formGroupName]="i"
+                     class="d-flex align-items-top justify-content-center list-item p-2">
+                  <div class="col-4 pl-0">
+                    <dx-select-box class="form-control"
+                                   [dataSource]="[contributeService.languagesList, i] | functionCall:filterLanguages:this"
+                                   valueExpr="id"
+                                   displayExpr="name"
+                                   placeholder="{{ 'Shared.Label.SelectLanguage' | translate }}"
+                                   formControlName="languageId">
+                    </dx-select-box>
+                    <div *ngIf="isFormSubmitted && item.get('languageId').hasError('required')"
+                         class="alert alert-danger mt-1 p-1 mb-0">
+                      {{ 'Shared.Message.RequiredField' | translate }}
+                    </div>
+                  </div>
+                  <div class="col-6 pl-0">
+                    <dx-slider [min]="0"
+                               [max]="10"
+                               formControlName="levelProficiency"></dx-slider>
+                  </div>
+                  <div class="col-1 p-0 levelProficiencyValue d-flex align-items-center justify-content-center">{{formArrayProficiencyLanguagesControls()[i].get('levelProficiency')?.value}}</div>
+                  <div class="col-1 pr-0">
+                    <button type="button"
+                            class="btn btn-outline-danger w-100"
+                            (click)="removeProficiencyLanguage(i)">
+                      <i class="fa fa-trash"
+                         aria-hidden="true"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12">
+            <button class="btn btn-primary w-100"
+                    (click)="onSaveChangesProfile()">
+              {{ 'Shared.Label.Save' | translate }}
+            </button>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<dx-popup [width]="500"
+          [height]="310"
+          [showTitle]="true"
+          title="{{ 'ProfileComponent.Label.ChangePassword' | translate }}"
+          [dragEnabled]="false"
+          [closeOnOutsideClick]="false"
+          [showCloseButton]="false"
+          [(visible)]="popupVisible">
+  <div *dxTemplate="let data of 'content'">
+    <ng-container *ngIf="!isBusy && formChangePassword">
+      <div class="container-form-popup"
+           [formGroup]="formChangePassword">
+        <dx-scroll-view direction="vertical">
+
+          <div class="row pt-2 m-0 mb-2 d-flex align-items-center">
+            <div class="col-6">
+              {{ 'ProfileComponent.Label.OldPassword' | translate }}
+            </div>
+            <div class="col-6">
+              <input class="form-control"
+                     type="password"
+                     formControlName="oldPassword">
+            </div>
+          </div>
+
+          <div class="row m-0 mb-2 d-flex align-items-center">
+            <div class="col-6">
+              {{ 'ProfileComponent.Label.NewPassword' | translate }}
+            </div>
+            <div class="col-6">
+              <input class="form-control"
+                     type="password"
+                     formControlName="newPassword">
+            </div>
+          </div>
+
+          <div class="row m-0 mb-2 d-flex align-items-center">
+            <div class="col-6">
+              {{ 'ProfileComponent.Label.NewPasswordAgain' | translate }}
+            </div>
+            <div class="col-6">
+              <input class="form-control"
+                     type="password"
+                     formControlName="newPasswordAgain">
+            </div>
+          </div>
+        </dx-scroll-view>
+
+      </div>
+
+
+      <div class="row position-absolute m-0 py-2 popup-buttons">
+        <div class="col-6">
+          <button class="btn btn-danger w-100"
+                  (click)="onCancel()">
+            {{ 'Shared.Label.Cancel' | translate }}
+          </button>
+        </div>
+        <div class="col-6">
+          <button class="btn btn-primary w-100"
+                  (click)="onSave()">
+            {{ 'Shared.Label.Save' | translate }}
+          </button>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</dx-popup>

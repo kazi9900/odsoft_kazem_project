@@ -1,0 +1,128 @@
+<button class="btn btn-primary position-absolute btn-add"
+        [disabled]="isBusy"
+        (click)="onAddLanguage()">
+  <i class="fa fa-plus-square"
+     aria-hidden="true"></i> {{'Add'}}
+</button>
+
+<div class="w-100 h-100">
+  <div class="p-scroll">
+    <div class="row m-0 border-bottom bg-white lista-row-header">
+      <div class="col-4 d-flex align-items-center border-right">
+        <b>{{'Name'}}</b>
+      </div>
+      <div class="col-4 d-flex align-items-center border-right">
+        <b>{{'Abbreviation'}}</b>
+      </div>
+      <div class="col-4 d-flex align-items-center">
+        <b>{{'Type'}}</b>
+      </div>
+    </div>
+  </div>
+
+  <div class="container-list bg-white position-relative">
+    <div *ngFor="let language of listLanguages"
+         class="row m-0 border-bottom lista-item"
+         [ngClass]="{'lista-item-selected': currentLanguage === language}"
+         (click)="onSelectItem(language)">
+      <div class="col-4 d-flex align-items-center border-right">
+        {{language?.name}}
+      </div>
+      <div class="col-4 d-flex align-items-center border-right">
+        {{language?.abbreviation}}
+      </div>
+      <div class="col-4 d-flex align-items-center">
+        {{language?.type | functionCall:getTypeLanguageDescr:this}}
+      </div>
+    </div>
+
+    <ngx-spinner [fullScreen]="false"
+                 type="ball-clip-rotate-pulse"></ngx-spinner>
+  </div>
+</div>
+
+<dx-popup [width]="500"
+          [height]="370"
+          [showTitle]="true"
+          title="{{'Language Detail'}}"
+          [dragEnabled]="false"
+          [closeOnOutsideClick]="false"
+          [showCloseButton]="false"
+          [(visible)]="popupVisible">
+  <div *dxTemplate="let data of 'content'">
+    <ng-container *ngIf="!isBusy && form">
+      <div class="container-form"
+           [formGroup]="form">
+
+        <dx-scroll-view direction="vertical">
+          <div class="row m-0 mb-2 d-flex align-items-center">
+            <div class="col-4">
+              {{'Name'}}
+            </div>
+            <div class="col-8">
+              <input class="form-control"
+                     type="text"
+                     formControlName="name">
+              <div *ngIf="isFormSubmitted && form.get('name').hasError('required')"
+                   class="alert alert-danger mt-1 mb-0 p-1">
+                {{ 'SHARED.Message.RequiredField' | translate }}
+              </div>
+            </div>
+          </div>
+
+          <div class="row m-0 mb-2 d-flex align-items-center">
+            <div class="col-4">
+              {{'Abbreviation'}}
+            </div>
+            <div class="col-8">
+              <input class="form-control"
+                     type="text"
+                     formControlName="abbreviation">
+              <div *ngIf="isFormSubmitted && form.get('abbreviation').hasError('required')"
+                   class="alert alert-danger mt-1 mb-0 p-1">
+                {{ 'SHARED.Message.RequiredField' | translate }}
+              </div>
+            </div>
+          </div>
+
+          <div class="row m-0 mb-2 d-flex align-items-center">
+            <div class="col-4">
+              {{'Type'}}
+            </div>
+            <div class="col-8">
+              <dx-select-box class="form-control"
+                             [dataSource]="typesLanguage"
+                             valueExpr="id"
+                             displayExpr="descr"
+                             [showClearButton]="true"
+                             placeholder="Selecionar"
+                             formControlName="type">
+              </dx-select-box>
+              <div *ngIf="isFormSubmitted && form.get('type').hasError('required')"
+                   class="alert alert-danger mt-1 mb-0 p-1">
+                {{ 'SHARED.Message.RequiredField' | translate }}
+              </div>
+            </div>
+          </div>
+
+        </dx-scroll-view>
+      </div>
+
+
+      <div class="row position-absolute m-0 py-2 popup-buttons">
+        <div class="col-6">
+          <button class="btn btn-danger w-100"
+                  (click)="onCancel()">
+            Cancel
+          </button>
+        </div>
+        <div class="col-6">
+          <button class="btn btn-primary w-100"
+                  (click)="onSave()">
+            Save
+          </button>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</dx-popup>

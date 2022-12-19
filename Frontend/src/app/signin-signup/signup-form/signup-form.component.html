@@ -1,0 +1,201 @@
+<div class="container-form" *ngIf="form">
+  <h3 class="text-center">{{ 'SignInSignUpComponent.Label.SignUp' | translate }}</h3>
+  <div class="row"
+       [formGroup]="form">
+    <!-- Name -->
+    <div class="col-12">
+      <div class="form-group">
+        <label>{{ 'Shared.Label.Name' | translate }}</label>
+        <input class="form-control"
+               type="text"
+               formControlName="name"
+               placeholder="{{ 'Shared.Label.Name' | translate }}" />
+        <div *ngIf="isFormSubmitted && form.get('name').hasError('required')"
+             class="alert alert-danger mt-1 p-1">
+          {{ 'Shared.Message.RequiredField' | translate }}
+        </div>
+      </div>
+    </div>
+
+    <!-- Email -->
+    <div class="col-12">
+      <div class="form-group">
+        <label>{{ 'Shared.Label.Email' | translate }}</label>
+        <input class="form-control"
+               type="text"
+               formControlName="email"
+               placeholder="{{ 'Shared.Label.Email' | translate }}">
+        <div *ngIf="isFormSubmitted && form.get('email').hasError('required')"
+             class="alert alert-danger mt-1 p-1">
+          {{ 'Shared.Message.RequiredField' | translate }}
+        </div>
+        <div *ngIf="isFormSubmitted && form.get('email').hasError('email')"
+             class="alert alert-danger mt-1 p-1">
+          {{ 'Shared.Message.InvalidEmail' | translate }}
+        </div>
+        <div *ngIf="isFormSubmitted && form.get('email').hasError('alredyExist')"
+             class="alert alert-danger mt-1 p-1">
+          {{ 'Shared.Message.EmailAlredyExists' | translate }}
+        </div>
+      </div>
+    </div>
+
+    <!-- Projects -->
+    <div class="col-12 form-group">
+      <div class="border-header">
+        <div class="d-flex align-items-center p-2">
+          <label class="m-0">
+            {{ 'Shared.Label.Projects' | translate }}
+          </label>
+          <button type="button"
+                  class="btn btn-outline-primary mr-2 ml-auto"
+                  (click)="addProject(true)"
+                  [disabled]="form?.get('projects')?.invalid">
+            {{ 'Shared.Label.Create' | translate }}
+          </button>
+          <button type="button"
+                  class="btn btn-outline-primary"
+                  (click)="addProject(false)"
+                  [disabled]="form?.get('projects')?.invalid">
+            {{ 'Shared.Label.Add' | translate }}
+          </button>
+        </div>
+        <div formArrayName="projects">
+          <div *ngFor="let item of formArrayProjectsControls(); let i = index;"
+               [formGroupName]="i"
+               class="list-item">
+            <div class="d-flex align-items-top justify-content-center p-2">
+              <div class="col-4 pl-0">
+                <input *ngIf="formArrayProjectsControls()[i].get('isNew')?.value"
+                       class="form-control"
+                       placeholder="{{ 'Shared.Label.Name' | translate }}"
+                       formControlName="name" />
+                <dx-select-box *ngIf="!formArrayProjectsControls()[i].get('isNew')?.value"
+                               class="form-control heiht-38"
+                               [dataSource]="[contributeService?.projectsList, i] | functionCall:filterProjects:this"
+                               valueExpr="id"
+                               displayExpr="name"
+                               placeholder="{{ 'Shared.Label.SelectProject' | translate }}"
+                               formControlName="id">
+                </dx-select-box>
+                <div *ngIf="isFormSubmitted && item.get('name').hasError('required')"
+                     class="alert alert-danger mt-1 p-1 mb-0">
+                  {{ 'Shared.Message.RequiredField' | translate }}
+                </div>
+                <div *ngIf="isFormSubmitted && item.get('id').hasError('required')"
+                     class="alert alert-danger mt-1 p-1 mb-0">
+                  {{ 'Shared.Message.RequiredField' | translate }}
+                </div>
+              </div>
+              <div class="col-7">
+                <input class="form-control"
+                       placeholder="{{ 'Shared.Label.Description' | translate }}"
+                       formControlName="description" />
+                <div *ngIf="isFormSubmitted && item.get('description').hasError('required')"
+                     class="alert alert-danger mt-1 p-1 mb-0">
+                  {{ 'Shared.Message.RequiredField' | translate }}
+                </div>
+              </div>
+              <div class="col-1 pr-0">
+                <button type="button"
+                        class="btn btn-outline-danger w-100"
+                        (click)="removeProject(i)">
+                  <i class="fa fa-trash"
+                     aria-hidden="true"></i>
+                </button>
+              </div>
+            </div>
+            <div class="d-flex align-items-top justify-content-center p-2">
+              <div class="col-6 pl-0">
+                <dx-select-box class="form-control"
+                               [dataSource]="[contributeService?.languagesList, item.controls.l2.value] | functionCall:removeLanguage:this"
+                               valueExpr="id"
+                               displayExpr="name"
+                               placeholder="{{ 'Shared.Label.SelectLanguage1' | translate }}"
+                               formControlName="l1">
+                </dx-select-box>
+                <div *ngIf="isFormSubmitted && item.get('l1').hasError('required')"
+                     class="alert alert-danger mt-1 p-1 mb-0">
+                  {{ 'Shared.Message.RequiredField' | translate }}
+                </div>
+              </div>
+              <div class="col-6 pr-0">
+                <dx-select-box class="form-control"
+                               [dataSource]="[contributeService?.languagesList, item.controls.l1.value] | functionCall:removeLanguage:this"
+                               valueExpr="id"
+                               displayExpr="name"
+                               placeholder="{{ 'Shared.Label.SelectLanguage2' | translate }}"
+                               formControlName="l2">
+                </dx-select-box>
+                <div *ngIf="isFormSubmitted && item.get('l2').hasError('required')"
+                     class="alert alert-danger mt-1 p-1 mb-0">
+                  {{ 'Shared.Message.RequiredField' | translate }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Proficiency Languages -->
+    <div class="col-12 form-group">
+      <div class="border-header">
+        <div class="d-flex align-items-center p-2">
+          <label class="m-0">{{ 'Shared.Label.ProficiencyLanguages' | translate }}</label>
+          <button type="button"
+                  class="btn btn-outline-primary ml-auto"
+                  (click)="addProficiencyLanguage()"
+                  [disabled]="form?.get('proficiencyLanguages')?.invalid">
+            {{ 'Shared.Label.Add' | translate }}
+          </button>
+        </div>
+
+        <div formArrayName="proficiencyLanguages">
+          <div *ngFor="let item of formArrayProficiencyLanguagesControls(); let i = index;"
+               [formGroupName]="i"
+               class="d-flex align-items-top justify-content-center list-item p-2">
+            <div class="col-4 pl-0">
+              <dx-select-box class="form-control"
+                             [dataSource]="[contributeService?.languagesList, i] | functionCall:filterLanguages:this"
+                             valueExpr="id"
+                             displayExpr="name"
+                             placeholder="{{ 'Shared.Label.SelectLanguage' | translate }}"
+                             formControlName="id">
+              </dx-select-box>
+              <div *ngIf="isFormSubmitted && item.get('id').hasError('required')"
+                   class="alert alert-danger mt-1 p-1 mb-0">
+                {{ 'Shared.Message.RequiredField' | translate }}
+              </div>
+            </div>
+            <div class="col-6 pl-0">
+              <dx-slider [min]="0"
+                         [max]="10"
+                         formControlName="levelProficiency"></dx-slider>
+            </div>
+            <div class="col-1 p-0 levelProficiencyValue d-flex align-items-center justify-content-center">{{formArrayProficiencyLanguagesControls()[i]?.get('levelProficiency')?.value}}</div>
+            <div class="col-1 pr-0">
+              <button type="button"
+                      class="btn btn-outline-danger w-100"
+                      (click)="removeProficiencyLanguage(i)">
+                <i class="fa fa-trash"
+                   aria-hidden="true"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12">
+      <button class="btn btn-primary w-100"
+              (click)="signUp()">
+        {{ 'SignInSignUpComponent.Label.Register' | translate }}
+      </button>
+    </div>
+
+  </div>
+
+</div>
+
+<ngx-spinner type="ball-clip-rotate-pulse"></ngx-spinner>

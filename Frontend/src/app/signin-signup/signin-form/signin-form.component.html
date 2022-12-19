@@ -1,0 +1,179 @@
+<div class="container-form" *ngIf="form">
+  <h3 class="text-center">{{ 'SignInSignUpComponent.Label.SignIn' | translate }}</h3>
+  <div class="row"
+       [formGroup]="form">
+    <div class="col-12">
+
+      <!-- Email -->
+      <div class="form-group">
+        <label>{{ 'Shared.Label.Email' | translate }}</label>
+        <input class="form-control"
+               type="text"
+               formControlName="email"
+               placeholder="{{ 'Shared.Label.Email' | translate }}">
+        <div *ngIf="isFormSubmitted && form.controls['email'].hasError('required')"
+             class="alert alert-danger mt-1 p-1">
+          {{ 'Shared.Message.RequiredField' | translate }}
+        </div>
+        <div *ngIf="isFormSubmitted && form.controls['email'].hasError('email')"
+             class="alert alert-danger mt-1 p-1">
+          {{ 'Shared.Message.InvalidEmail' | translate }}
+        </div>
+        <div *ngIf="isFormSubmitted && form.controls['email'].hasError('noExist')"
+             class="alert alert-danger mt-1 p-1">
+          {{ 'Shared.Message.EmailNoExits' | translate }}
+        </div>
+      </div>
+
+      <!-- Password -->
+      <div class="form-group">
+        <label>{{ 'Shared.Label.Password' | translate }}</label>
+        <input class="form-control"
+               type="password"
+               formControlName="password"
+               placeholder="{{ 'Shared.Label.Password' | translate }}">
+        <div *ngIf="isFormSubmitted && form.controls['password'].hasError('required')"
+             class="alert alert-danger mt-1 p-1">
+          {{ 'Shared.Message.RequiredField' | translate }}
+        </div>
+      </div>
+
+      <button class="btn btn-primary col-12"
+              (click)="signIn()">
+        {{ 'SignInSignUpComponent.Label.Login' | translate }}
+      </button>
+
+      <div class="col-12 d-flex align-items-center justify-content-center pt-3">
+        <span class="btn p-0"
+              (click)="onOpenFormResetPassword()"><b>{{ 'SignInSignUpComponent.Label.ForgotPassword' | translate }}</b></span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<dx-popup [width]="500"
+          [height]="230"
+          [showTitle]="true"
+          title="{{ 'SignInSignUpComponent.Label.ResetYourPassword' | translate }}"
+          [dragEnabled]="false"
+          [closeOnOutsideClick]="false"
+          [showCloseButton]="true"
+          [(visible)]="popupVisible"
+          (onHidden)="onCancel()">
+  <div *dxTemplate="let data of 'content'"
+       class="position-relative">
+    <ng-container *ngIf="!isBusy && formResetPassword">
+      <div class="container-form-popup"
+           [formGroup]="formResetPassword">
+        <dx-scroll-view direction="vertical">
+
+          <!-- Step 1 -->
+          <div *ngIf="formResetPassword.controls.email.enabled"
+               class="row pt-2 m-0 mb-2 d-flex align-items-center">
+            <div class="col-12">
+              <input class="form-control"
+                     type="text"
+                     formControlName="email"
+                     placeholder="{{ 'Shared.Label.Email' | translate }}">
+
+
+              <div *ngIf="isFormResetPasswordSubmitted && formResetPassword.controls['email'].hasError('required')"
+                   class="alert alert-danger mt-1 p-1">
+                {{ 'Shared.Message.RequiredField' | translate }}
+              </div>
+              <div *ngIf="isFormResetPasswordSubmitted && formResetPassword.controls['email'].hasError('email')"
+                   class="alert alert-danger mt-1 p-1">
+                {{ 'Shared.Message.InvalidEmail' | translate }}
+              </div>
+              <div *ngIf="isFormResetPasswordSubmitted && formResetPassword.controls['email'].hasError('noExist')"
+                   class="alert alert-danger mt-1 p-1">
+                {{ 'Shared.Message.EmailNoExits' | translate }}
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Step 2 -->
+          <div *ngIf="formResetPassword.controls.code.enabled"
+               class="row pt-2 m-0 mb-2 d-flex align-items-center">
+            <div class="col-12">
+              <span>{{ 'SignInSignUpComponent.Label.CheckEmailCodeResetPassword' | translate }}</span>
+            </div>
+            <div class="col-12">
+              <input class="form-control"
+                     type="text"
+                     formControlName="code"
+                     placeholder="{{ 'SignInSignUpComponent.Label.Code' | translate }}">
+              <div *ngIf="isFormResetPasswordSubmitted &&
+                   (formResetPassword.controls['code'].hasError('notValid') || formResetPassword.controls['code'].hasError('required'))"
+                   class="alert alert-danger mt-1 p-1">
+                {{ 'SignInSignUpComponent.Message.InvalidCode' | translate }}
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 3 -->
+          <div *ngIf="formResetPassword.controls.newPassword.enabled"
+               class="row m-0 mb-2 d-flex align-items-center">
+            <div class="col-12">
+              <span>{{ 'ProfileComponent.Label.NewPassword' | translate }}</span>
+            </div>
+            <div class="col-12">
+              <input class="form-control"
+                     type="password"
+                     formControlName="newPassword"
+                     placeholder="{{ 'Shared.Label.Password' | translate }}">
+
+              <div *ngIf="isFormResetPasswordSubmitted && formResetPassword.controls['newPassword'].hasError('required')"
+                   class="alert alert-danger mt-1 p-1">
+                {{ 'Shared.Message.RequiredField' | translate }}
+              </div>
+              <div *ngIf="isFormResetPasswordSubmitted && formResetPassword.controls['newPassword'].hasError('invalid')"
+                   class="alert alert-danger mt-1 p-1">
+                {{ 'SignInSignUpComponent.Message.InvalidPassword' | translate }}
+              </div>
+              <div *ngIf="isFormResetPasswordSubmitted && formResetPassword.controls['newPassword'].hasError('minlength')"
+                   class="alert alert-danger mt-1 p-1">
+                {{ 'SignInSignUpComponent.Message.PasswordMinLenght' | translate }}
+              </div>
+
+            </div>
+          </div>
+        </dx-scroll-view>
+
+      </div>
+
+
+      <div class="row position-absolute m-0 py-2 popup-buttons">
+        <div class="col-12">
+          <button *ngIf="formResetPassword.controls.email.enabled"
+                  class="btn btn-primary w-100"
+                  (click)="onSendEmailCodeResetPassword()">
+            {{ 'SignInSignUpComponent.Label.SendPasswordResetEmail' | translate }}
+          </button>
+          <button *ngIf="formResetPassword.controls.code.enabled"
+                  class="btn btn-primary w-100"
+                  (click)="onCheckCodeResetPassword()">
+            {{ 'SignInSignUpComponent.Label.Submit' | translate }}
+          </button>
+          <button *ngIf="formResetPassword.controls.newPassword.enabled"
+                  class="btn btn-primary w-100"
+                  (click)="onResetPassword()">
+            {{ 'Shared.Label.Save' | translate }}
+          </button>
+        </div>
+      </div>
+    </ng-container>
+
+    <div *ngIf="isBusy"
+         class="w-100 d-flex align-items-center justify-content-center">
+      <div class="spinner-border text-secondary"
+           role="status">
+        <span class="sr-only"></span>
+      </div>
+    </div>
+  </div>
+</dx-popup>
+
+<ngx-spinner type="ball-clip-rotate-pulse"></ngx-spinner>

@@ -1,0 +1,90 @@
+/* You can add global styles to this file, and also import other style files */
+
+body {
+  background-color: #001f3f !important;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #2ECC40;
+}
+
+.scrollbar-trach-white::-webkit-scrollbar-track {
+  background: #39CCCC !important;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #85144b;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #001f3f;
+}
+
+
+::-webkit-scrollbar-track {
+  background: #7FDBFF;
+}
+
+.p-scroll {
+  padding-right: 5px;
+}
+
+textarea {
+  resize: none !important;
+}
+
+.pr-scroll {
+  padding-right: 3px;
+}
+
+/* Variables */
+// Color's
+$select-color: #DDDDDD;
+$select-border-color: #198DC8;
+
+
+// Height's
+$height-btn: 38px;
+$height-input: 32px;
+$height-lista-item: 50px;
+$height-nav-bar: 110px;
+$height-list-responsive: 400px;
+
+$index-nav-bar: 100;
+
+$p-1: 4px;
+$p-2: 8px;
+
+/* Lists Styles */
+.lista-item {
+  min-height: $height-lista-item;
+  cursor: context-menu;
+  border-left: 2px solid transparent;
+}
+
+.lista-item:hover {
+  background: $select-color;
+}
+
+.lista-item-selected {
+  border-left: 2px solid $select-border-color;
+  background: $select-color;
+}
+
+.container-body-popup {
+  height: calc(100% - 34px);
+  overflow-y: auto;
+}
+
+.popup-buttons {
+  bottom: 0;
+  left: 0;
+  right: 0;
+}

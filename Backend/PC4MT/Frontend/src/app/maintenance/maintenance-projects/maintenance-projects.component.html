@@ -1,0 +1,215 @@
+<button class="btn btn-primary position-absolute btn-add"
+        [disabled]="isBusy"
+        (click)="onAddProject()">
+  <i class="fa fa-plus-square"
+     aria-hidden="true"></i> {{'Add'}}
+</button>
+
+<div class="w-100 h-100">
+  <div class="p-scroll">
+    <div class="row m-0 border-bottom bg-white lista-row-header">
+      <div class="col-3 d-flex align-items-center border-right">
+        <b>{{'Name'}}</b>
+      </div>
+      <div class="col-3 d-flex align-items-center border-right">
+        <b>{{'Description'}}</b>
+      </div>
+      <div class="col-3 d-flex align-items-center border-right">
+        <b>{{'Language 1'}}</b>
+      </div>
+      <div class="col-3 d-flex align-items-center border-right">
+        <b>{{'Language 2'}}</b>
+      </div>
+    </div>
+  </div>
+
+  <div class="container-list bg-white position-relative">
+    <div *ngFor="let project of listProjects"
+         class="row m-0 border-bottom lista-item"
+         [ngClass]="{'lista-item-selected': currentProject === project}"
+         (click)="onSelectItem(project)">
+      <div class="col-3 d-flex align-items-center border-right">
+        {{project?.name}}
+      </div>
+      <div class="col-3 d-flex align-items-center border-right">
+        {{project?.description}}
+      </div>
+      <div class="col-3 d-flex align-items-center border-right">
+        {{project?.language1Id | functionCall:getLanguageName:this}}
+      </div>
+      <div class="col-3 d-flex align-items-center">
+        {{project?.language2Id | functionCall:getLanguageName:this}}
+      </div>
+    </div>
+
+    <ngx-spinner [fullScreen]="false"
+                 type="ball-clip-rotate-pulse"></ngx-spinner>
+  </div>
+</div>
+
+<dx-popup [width]="'60%'"
+          [height]="'90%'"
+          [showTitle]="true"
+          title="{{'Project Detail'}}"
+          [dragEnabled]="false"
+          [closeOnOutsideClick]="false"
+          [showCloseButton]="false"
+          [(visible)]="popupVisible">
+  <div *dxTemplate="let data of 'content'">
+    <ng-container *ngIf="!isBusy && form">
+      <div class="container-form"
+           [formGroup]="form">
+
+        <dx-scroll-view direction="vertical">
+
+          <div class="row m-0 mb-2 d-flex align-items-center">
+            <div class="col-4">
+              {{'Name'}}
+            </div>
+            <div class="col-8">
+              <input class="form-control"
+                     type="text"
+                     formControlName="name">
+            </div>
+          </div>
+
+          <div class="row m-0 mb-2 d-flex align-items-center">
+            <div class="col-4">
+              {{'Description'}}
+            </div>
+            <div class="col-8">
+              <input class="form-control"
+                     type="text"
+                     formControlName="description">
+            </div>
+          </div>
+
+          <div class="row m-0 mb-2 d-flex align-items-center">
+            <div class="col-4">
+              {{'Language 1'}}
+            </div>
+            <div class="col-8">
+              <dx-select-box class="form-control"
+                             [dataSource]="[listLanguages, form?.controls?.language2Id?.value] | functionCall:removeLanguage:this"
+                             valueExpr="id"
+                             displayExpr="name"
+                             [showClearButton]="true"
+                             placeholder="Selecionar"
+                             formControlName="language1Id">
+              </dx-select-box>
+              <div *ngIf="isFormSubmitted && form.get('language1Id').hasError('required')"
+                   class="alert alert-danger mt-1 mb-0 p-1">
+                {{ 'SHARED.Message.RequiredField' | translate }}
+              </div>
+            </div>
+          </div>
+
+          <div class="row m-0 mb-2 d-flex align-items-center">
+            <div class="col-4">
+              {{'Language 2'}}
+            </div>
+            <div class="col-8">
+              <dx-select-box class="form-control"
+                             [dataSource]="[listLanguages, form?.controls?.language1Id?.value] | functionCall:removeLanguage:this"
+                             valueExpr="id"
+                             displayExpr="name"
+                             [showClearButton]="true"
+                             placeholder="Selecionar"
+                             formControlName="language2Id">
+              </dx-select-box>
+              <div *ngIf="isFormSubmitted && form.get('language2Id').hasError('required')"
+                   class="alert alert-danger mt-1 mb-0 p-1">
+                {{ 'SHARED.Message.RequiredField' | translate }}
+              </div>
+            </div>
+          </div>
+
+          <div class="row m-0 mb-2 d-flex align-items-center">
+            <div class="col-4">
+              {{'Active'}}
+            </div>
+            <div class="col-8">
+              <dx-check-box class="container-check w-100"
+                            formControlName="active"
+                            text="Yes"></dx-check-box>
+            </div>
+          </div>
+
+          <!-- ProjectUsers -->
+          <div class="col-12 form-group">
+            <div class="border">
+              <div class="col-12 d-flex align-items-center p-2">
+                <label class="m-0">
+                  {{ 'Users' }}
+                </label>
+                <button type="button"
+                        class="btn btn-outline-primary ml-auto"
+                        (click)="addProjectUser()"
+                        [disabled]="!form?.controls['projectUsers'].valid">
+                  {{ 'SHARED.Label.Add' | translate }}
+                </button>
+              </div>
+
+              <div formArrayName="projectUsers">
+                <div *ngFor="let item of formArrayProjectUsersControls(); let i = index;"
+                     [formGroupName]="i"
+                     class="list-item border-top">
+                  <div class="d-flex align-items-center justify-content-center p-2">
+                    <div class="col-5 pl-0">
+
+                      <span *ngIf="item?.get('userName')?.value">{{ item?.get('userName')?.value }}</span>
+                      <dx-select-box *ngIf="!item?.get('userName')?.value"
+                                     class="form-control"
+                                     [dataSource]="[listUsers, i] | functionCall:filterUsers:this"
+                                     valueExpr="id"
+                                     displayExpr="name"
+                                     placeholder="Selecionar"
+                                     formControlName="userId">
+                      </dx-select-box>
+
+                    </div>
+                    <div class="col-3">
+                      <dx-check-box formControlName="isprojectOwner"
+                                    text="Project Owner"></dx-check-box>
+                    </div>
+                    <div class="col-3">
+                      <dx-check-box formControlName="isAutorized"
+                                    text="Autorized"></dx-check-box>
+                    </div>
+                    <div class="col-1 pr-0">
+                      <button *ngIf="!item?.get('userName')?.value"
+                              type="button"
+                              class="btn btn-outline-danger w-100"
+                              (click)="removeProjectUser(i)">
+                        <i class="fa fa-trash"
+                           aria-hidden="true"></i>
+                      </button>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </dx-scroll-view>
+
+      </div>
+
+      <div class="row position-absolute m-0 py-2 popup-buttons">
+        <div class="col-6">
+          <button class="btn btn-danger w-100"
+                  (click)="onCancel()">
+            Cancel
+          </button>
+        </div>
+        <div class="col-6">
+          <button class="btn btn-primary w-100"
+                  (click)="onSave()">
+            Save
+          </button>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</dx-popup>

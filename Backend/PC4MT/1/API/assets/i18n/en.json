@@ -1,0 +1,146 @@
+{
+  "AppComponent": {
+    "Message": {
+      "ErrorLoadingGeneralData": "Error loading general data"
+    }
+  },
+
+  "ContributeComponent": {
+    "Label": {
+      "ChooseFile": "Choose file",
+      "InsertSentencesConfirmation": "Insert Sentences (Confirmation)",
+      "Info": "Info",
+      "InsertLevelLanguageProficiency": "Insert your level of language proficiency to ",
+      "InsertSentence": "Insert a sentence",
+      "InsertTranslation": "Insert a translation",
+      "Language1Language2": "Language 1 --> Language 2",
+      "MissingLevelLanguageProficiency": "Missing level of language proficiency"
+    },
+    "Message": {
+      "ErrorDeletingTranslation": "Error deleting translation",
+      "ErrorLoadingTranslations": "Error loading translations",
+      "ErrorLoadingSentences": "Error loading sentences",
+      "ErrorInsertingNewProject": "Error inserting a new project",
+      "ErrorInsertingSentence": "Error inserting sentence",
+      "ErrorInsertingTranslation": "Error inserting translation",
+      "ErrorSavingLanguageProficiency": "Error saving language proficiency",
+      "ErrorSavingSenteces": "Error saving sentences",
+      "ErrorUpdatingProject": "Error updating project",
+      "ErrorUpdatingTranslation": "Error updating translation",
+      "InvalidText": "Invalid text!",
+      "SentencesInsertedSuccessfully": "Sentences inserted successfully.",
+      "SentenceInsertedSuccessfully": "Sentence inserted successfully.",
+      "TranslationInsertedSuccessfully": "Translation inserted successfully. Thank you for your contribution!",
+      "TranslationUpdatedSuccessfully": "Translation updated successfully. Thank you for your contribution!",
+      "TranslationSuccessfullyDeleted": "Translation successfully deleted"
+    }
+  },
+
+  "HomeComponent": {
+    "Message": {
+      "Title": "Parallel Corpora Hub for (Spoken-Sign) Machine Translation",
+      "DescriptionPart1": "Gloss Loader is an online tool meant to support crowd sourcing contributions to gather parallel corpora for machine translation.Although the platform is open for any language pairs, it was originally developed aiming to retrieve parallel corpora for spoken-sign language pairs. In such cases, sign language gloss in the same spoken language is used to translate sign-spoken language pairs.",
+      "DescriptionPart2": "The platform can be used to provide the translation in a given language to the sentences already available in the database or to input the same sentence translated in two or more different languages. Gloss Loader can be used anonymously or by registered users. The database identifier of registered users is stored together with their contributions just for statistical purposes in order to be able to assign a trustworthy indicator to their translations/contributions which will be critical for machine translation."
+    }
+  },
+
+  "NavBarComponent": {
+    "Label": {
+      "Contribute": "Contribute",
+      "Home": "Home",
+      "Maintenance": "Maintenance",
+      "Profile": "Profile",
+      "SignInSignUp": "Sign In/Sign Up",
+      "SignOut": "Sign Out"
+    }
+  },
+
+  "ProfileComponent": {
+    "Label": {
+      "ChangePassword": "Change password",
+      "NewPassword": "New password",
+      "NewPasswordAgain": "New password (again)",
+      "OldPassword": "Old password"
+    },
+    "Message": {
+      "ErrorChangingPassword": "Error changing password",
+      "ErrorUpdatingProfile": "Error updating profile",
+      "InvalidPassword": "Invalid password",
+      "PasswordSuccessfullyChanged": "Password successfully changed",
+      "ProfileUpdatedSuccessfully": "Profile updated successfully",
+      "NotPossibleRemoveLanguageProficiency": "It is not possible to remove the language proficiency. You have already made contributions to this language."
+    }
+  },
+
+  "SignInSignUpComponent": {
+    "Label": {
+      "CheckEmailCodeResetPassword": "Check your email and insert the code to reset password",
+      "Code": "Code",
+      "ForgotPassword": "Forgot password?",
+      "Login": "Login",
+      "Register": "Register",
+      "ResetYourPassword": "Reset Your Password",
+      "SendPasswordResetEmail": "Send Password Reset Email",
+      "SignIn": "Sign In",
+      "SignUp": "Sign Up",
+      "Submit": "Submit"
+    },
+    "Message": {
+      "AccountCreatedCheckEmail": "Account created. Check your email please",
+      "EmailRequired": "Email is required!",
+      "ErrorLoginUser": "Error login user",
+      "ErrorRegisteringUser": "Error registering user",
+      "IncorrectData": "Incorrect data",
+      "InvalidCode": "Invalid code!",
+      "InvalidPassword": "Invalid password!",
+      "LoginSuccessfull": "Login successfull",
+      "NameRequired": "Name is required!",
+      "PasswordMinLenght": "Password must be at least 8 characters!"
+    }
+  },
+
+  "Shared": {
+    "Label": {
+      "Accept": "Accept",
+      "Active": "Active",
+      "Add": "Add",
+      "AppName": "PC4MT",
+      "Autorized": "Autorized",
+      "Cancel": "Cancel",
+      "Confirm": "Confirm",
+      "Create": "Create",
+      "Description": "Description",
+      "Download": "Download",
+      "Email": "Email",
+      "Language1": "Languague 1",
+      "Language2": "Languague 2",
+      "Name": "Name",
+      "NoAutorized": "No autorized",
+      "Password": "Password",
+      "Pending": "Pending",
+      "ProficiencyLanguages": "Proficiency Languages",
+      "ProjectOwner": "Project Owner",
+      "ProjectDetail": "Project Detail",
+      "Projects": "Projects",
+      "Save": "Save",
+      "Search": "Search",
+      "Select": "Select",
+      "SelectLanguage": "Select language",
+      "SelectLanguage1": "Select language 1",
+      "SelectLanguage2": "Select language 2",
+      "SelectLanguages": "Select languages",
+      "SelectProject": "Select project",
+      "Rejected": "Rejected",
+      "Translate": "Translate",
+      "Users": "Users"
+    },
+    "Message": {
+      "IncorrectData": "Incorrect data",
+      "EmailAlredyExists": "The email is already used by another user!",
+      "EmailNoExits": "Email doesn't belong to any user!",
+      "ErrorLoading": "Error loading data",
+      "InvalidEmail": "Invalid email!",
+      "RequiredField": "Required field!"
+    }
+  }
+}

@@ -1,0 +1,37 @@
+<div class="container-maintenance">
+  <div class="row m-0 p-2">
+    <div class="btn-group ml-auto"
+         role="group">
+
+      <button type="button"
+              class="btn btn-secondary"
+              [ngClass]="{'active': router.url.includes('maintenance/users')}"
+              (click)="onOpenPage('users')">
+        {{'Users'}}
+      </button>
+      <button type="button"
+              class="btn btn-secondary"
+              [ngClass]="{'active': router.url.includes('maintenance/projects')}"
+              (click)="onOpenPage('projects')">
+        {{'Projects'}}
+
+      </button>
+      <button type="button"
+              class="btn btn-secondary"
+              [ngClass]="{'active': router.url.includes('maintenance/languages')}"
+              (click)="onOpenPage('languages')">
+        {{'Languages'}}
+      </button>
+      <button type="button"
+              class="btn btn-secondary"
+              [ngClass]="{'active': router.url.includes('maintenance/downloadsettings')}"
+              (click)="onOpenPage('downloadsettings')">
+        {{'Download Settings'}}
+      </button>
+    </div>
+  </div>
+
+  <div class="container-maintenance-body pl-2 pb-2">
+    <router-outlet></router-outlet>
+  </div>
+</div>

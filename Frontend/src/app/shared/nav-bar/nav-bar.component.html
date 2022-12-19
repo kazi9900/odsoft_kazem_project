@@ -1,0 +1,33 @@
+<div class="nav-img">
+  <div> <img src="../assets/img/logo.png" alt="" /></div>
+  <div class="nav-logo">
+    {{ 'Gloss Loader' | translate }}
+  </div>  
+    <div class="nav-links-container d-flex align-items-center">
+    <a class="nav-link"
+       (click)="onOpenPage('home')">{{ 'NavBarComponent.Label.Home' | translate }}</a>
+    <a class="nav-link"
+       (click)="onOpenPage('contribute')">{{ 'NavBarComponent.Label.Contribute' | translate }}</a>
+    <a *ngIf="!credentialsService.isAuthenticated()"
+       class="nav-link"
+       (click)="onOpenPage('signin-signup')">{{ 'NavBarComponent.Label.SignInSignUp' | translate }}</a>
+    <a *ngIf="credentialsService.isAuthenticated()"
+       class="nav-link"
+       (click)="signOut()">{{ 'NavBarComponent.Label.SignOut' | translate }}</a>
+    <a *ngIf="credentialsService.isAuthenticated()"
+       class="nav-link"
+       (click)="onOpenPage('profile')">{{ 'NavBarComponent.Label.Profile' | translate}}</a>
+    <a *ngIf="credentialsService.isAuthenticated() && credentialsService.isRootOrAdmin()"
+       class="nav-link"
+       (click)="onOpenPage('maintenance')">{{ 'NavBarComponent.Label.Maintenance' | translate }}</a>
+
+    <dx-select-box class="border-0 rounded-0"
+                   [style.background]="'#7FDBFF'"
+                   [dataSource]="languages"
+                   [formControl]="currentLanguageControl"
+                   displayExpr="descr"
+                   valueExpr="id"
+                   [showDropDownButton]=false
+                   [width]="35"></dx-select-box>
+  </div>
+</div>

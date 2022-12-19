@@ -1,0 +1,37 @@
+<div class="container-fluid d-flex lista-item border-bottom pr-0">
+  <div class="column-l1 border-right">
+    {{ item?.sentence?.text }}
+  </div>
+  <div class="column-l2">
+    <div class="col-12"
+         *ngFor="let translationPerLanguage of [item?.translations, contributeService?.languagesL2Control?.value, searchSentenceL2] | functionCall:filterTranslations:this | groupBy: 'sentenceL2.languageId' | pairs; let last = last;"
+         [ngClass]="{'border-bottom': !last}">
+      <div class="w-100"
+           *ngFor="let translation of translationPerLanguage[1]; let isFirst = first; let isLast = last;">
+        <div class="pl-1 w-100"
+             *ngIf="isFirst">
+          <b>{{ translation?.sentenceL2?.languageDescr }}</b>
+        </div>
+        <div class="pl-3 w-100 border-right border-left d-flex align-items-center"
+             [ngClass]="{'border-bottom': !isLast}">
+          <span>{{ translation?.sentenceL2?.text }}</span>
+          <i class="btn ml-auto mr-2 fa fa-thumbs-up"
+             aria-hidden="true"
+             [ngClass]="{'text-success': [translation?.translationLikes, true] | functionCall:hasLikeCurrentuser:this,
+                         'disabled': !credencialsService.getCredentials}"
+             (click)="likeTranslation(translation)">
+            <span class="pl-1 pr-2">{{(translation?.translationLikes | filterBy: ['like']: true: true)?.length}}</span>
+          </i>
+          <i class="btn mr-2 fa fa-thumbs-down"
+             aria-hidden="true"
+             [ngClass]="{'text-danger': [translation?.translationLikes, false] | functionCall:hasLikeCurrentuser:this,
+                         'disabled': !credencialsService.getCredentials}"
+             (click)="dislikeTranslation(translation)">
+            <span class="pl-1 pr-2">{{(translation?.translationLikes | filterBy: ['like']: false: true)?.length}}</span>
+          </i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

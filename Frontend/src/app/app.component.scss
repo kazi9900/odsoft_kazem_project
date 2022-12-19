@@ -1,0 +1,7 @@
+@import "../styles";
+
+.container-body {
+  margin-top: $height-nav-bar;
+  height: calc(100vh - #{$height-nav-bar});
+  overflow: hidden;
+}

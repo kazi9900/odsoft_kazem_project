@@ -1,0 +1,70 @@
+.text-color {
+  color: #999;
+}
+
+@media screen and (min-height: 451px) {
+  .height-list {
+    height: calc(100vh - 221px);
+  }
+}
+
+@media screen and (max-height: 450px) {
+  .height-list {
+    height: 400px;
+  }
+}
+
+.height-list {
+  background: white;
+}
+
+.pr-s {
+  padding-right: 3px;
+}
+
+.lista-item {
+  min-height: 50px;
+  cursor: context-menu;
+  border-left: 2px solid transparent;
+}
+
+.lista-item:hover {
+  background: #e6fff7;
+}
+
+.lista-item-selected {
+  border-left: 2px solid #198dc8;
+  background: #e6fff7;
+}
+
+.invisible-background {
+  background-color: #333 !important;
+}
+
+.white-background {
+  background: white;
+}
+
+virtual-scroller {
+  overflow-y: scroll !important;
+}
+
+.lista-row-header {
+  border-left: 2px solid white;
+  height: 49px;
+}
+
+.btn-add {
+  top: 118px;
+}
+
+.container-form {
+  height: calc(100% - 34px);
+  overflow-y: auto;
+}
+
+.popup-buttons {
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
