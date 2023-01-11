@@ -1,0 +1,39 @@
+.container-list {
+  height: calc(100% - 49px);
+  overflow-y: scroll;
+}
+
+.popup-buttons {
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.container-form {
+  height: calc(100% - 34px);
+  overflow-y: auto;
+}
+
+.lista-item {
+  min-height: 50px;
+  cursor: context-menu;
+  border-left: 2px solid transparent;
+}
+
+.lista-item:hover {
+  background: #e6fff7;
+}
+
+.lista-item-selected {
+  border-left: 2px solid #198dc8;
+  background: #e6fff7;
+}
+
+.lista-row-header {
+  border-left: 2px solid white;
+  height: 49px;
+}
+
+.btn-add {
+  top: 118px;
+}

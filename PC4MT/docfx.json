@@ -1,0 +1,40 @@
+{
+  "metadata": [{
+   "src": [
+        "D:\\glossloader\\WebAppFile\\GlossLoaderWebApp\\Gloss Loader\\Backend\\PC4MT\\PC4MT.BLL\\Services"
+    ],
+    "resource": [
+      "./**/*.md",
+      "./**/*.png"
+    ]
+  }],
+  "build": {
+    "content": [
+      {
+        "files": [
+          "D:\\glossloader\\WebAppFile\\GlossLoaderWebApp\\Gloss Loader\\Backend\\PC4MT"
+        ],
+        "exclude": [
+          "D:\\glossloader\\WebAppFile\\GlossLoaderWebApp\\Gloss Loader\\Backend\\PC4MT\\PC4MT.BLL"
+        ],
+        "dest": "api/images"
+      }
+    ],
+    "resource": [{
+      "files": [
+        "./**/*.png"
+      ],
+      "exclude": [
+        "./obj/**/*"
+      ],
+      "dest": "api/images"
+    }],
+    "fileMetadata": {
+      "**/*.md": {
+        "technologies": [
+          ".NET", "ASP.NET"
+        ]
+      }
+    }
+  }
+}

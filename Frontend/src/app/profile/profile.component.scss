@@ -1,0 +1,57 @@
+.register {
+  background: -webkit-linear-gradient(left, #3931af, #00c6ff);
+  padding: 30px 15px;
+}
+
+.register-right {
+  background: #f8f9fa;
+  border-top-left-radius: 10% 50%;
+  border-bottom-left-radius: 10% 50%;
+  height: 100%;
+  overflow-y: auto;
+  padding-bottom: 20px;
+}
+
+.container-form {
+  padding-left: 90px;
+}
+
+.border-header {
+  border: 1px solid #ced4da;
+  border-radius: 0.25em;
+}
+
+.list-item {
+  border-top: 1px solid #ced4da;
+
+  .levelProficiencyValue {
+    border: 1px solid #ced4da;
+    border-radius: 0.25em;
+    height: 35px;
+    opacity: 0.5
+  }
+
+  button {
+    height: 35px;
+  }
+}
+
+.heiht-38 {
+  height: 38px;
+}
+
+.container-list {
+  height: calc(100% - 49px);
+  overflow-y: scroll;
+}
+
+.popup-buttons {
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.container-form-popup {
+  height: calc(100% - 34px);
+  overflow-y: auto;
+}

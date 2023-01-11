@@ -1,0 +1,146 @@
+{
+  "AppComponent": {
+    "Message": {
+      "ErrorLoadingGeneralData": "Erro no carregamento de informação geral"
+    }
+  },
+
+  "ContributeComponent": {
+    "Label": {
+      "ChooseFile": "Escolher ficheiro",
+      "InsertSentencesConfirmation": "Inserir Frases (Confirmação)",
+      "Info": "Info",
+      "InsertLevelLanguageProficiency": "Introduza o seu nível de profeciência para ",
+      "InsertSentence": "Inserir uma frase",
+      "InsertTranslation": "Inserir uma tradução",
+      "Language1Language2": "Língua 1 --> Língua 2",
+      "MissingLevelLanguageProficiency": "Faltando nível de proficiência"
+    },
+    "Message": {
+      "ErrorDeletingTranslation": "Erro ao elminar tradução",
+      "ErrorLoadingTranslations": "Erro ao carregar traduções",
+      "ErrorLoadingSentences": "Erro ao carregar frases",
+      "ErrorInsertingNewProject": "Erro ao inserir novo projeto",
+      "ErrorInsertingSentence": "Erro ao inserir frase",
+      "ErrorInsertingTranslation": "Erro ao inserir tradução",
+      "ErrorSavingLanguageProficiency": "Erro ao guardar proficiência de língua",
+      "ErrorSavingSenteces": "Erro ao guardar frases",
+      "ErrorUpdatingProject": "Erro ao atualizar projeto",
+      "ErrorUpdatingTranslation": "Error ao atualizar tradução",
+      "InvalidText": "Texto inválido!",
+      "SentencesInsertedSuccessfully": "Frases inseridas com sucesso.",
+      "SentenceInsertedSuccessfully": "Frase inserida com sucesso.",
+      "TranslationInsertedSuccessfully": "Tradução inserida com sucesso. Obrigado pelo seu contributo!",
+      "TranslationUpdatedSuccessfully": "Tradução atualizada com sucesso. Obrigado pelo seu contributo!",
+      "TranslationSuccessfullyDeleted": "Tradução eliminada com sucesso"
+    }
+  },
+
+  "HomeComponent": {
+    "Message": {
+      "Title": "Parallel Corpora Hub para Tradução Automática (Spoken-Sign)",      
+      "DescriptionPart1": "O Gloss Loader é uma ferramenta online destinada a apoiar contribuições de crowdsourcing para reunir corpora paralelos para tradução automática. Embora a plataforma seja aberta para qualquer par de línguas, ela foi originalmente desenvolvida com o objetivo de recuperar corpora paralelos para pares de línguas de sinais faladas. Nesses casos, o glossário da língua de sinais na mesma língua falada é usado para traduzir os pares de línguas faladas por sinais.",
+      "DescriptionPart2": " A plataforma pode ser usada para fornecer a tradução em um determinado idioma das frases já disponíveis no banco de dados ou para inserir a mesma frase traduzida em dois ou mais idiomas diferentes. O Gloss Loader pode ser usado anonimamente ou por usuários registrados. O identificador de banco de dados de usuários registrados é armazenado junto com suas contribuições apenas para fins estatísticos, a fim de poder atribuir um indicador confiável às suas traduções/contribuições que serão essenciais para a tradução automática."      
+    }
+  },
+
+  "NavBarComponent": {
+    "Label": {
+      "Contribute": "Contribuir",
+      "Home": "Home",
+      "Maintenance": "Manutenção",
+      "Profile": "Perfil",
+      "SignInSignUp": "Entrar/Registar",
+      "SignOut": "Sair"
+    }
+  },
+
+  "ProfileComponent": {
+    "Label": {
+      "ChangePassword": "Alterar palavra-chave",
+      "NewPassword": "Nova palavra-chave",
+      "NewPasswordAgain": "Nova palavra-chave (outra vez)",
+      "OldPassword": "Antiga palavra-chave"
+    },
+    "Message": {
+      "ErrorChangingPassword": "Erro ao alterar palavra-chave",
+      "ErrorUpdatingProfile": "Erro ao atualizar perfil",
+      "InvalidPassword": "Palavra-chave inválida",
+      "PasswordSuccessfullyChanged": "Palavra-chave alterada com sucesso",
+      "ProfileUpdatedSuccessfully": "Perfil atualizado com sucesso",
+      "NotPossibleRemoveLanguageProficiency": "Não é possível remover proficiência de língua. Já fez contribuições para esta língua."
+    }
+  },
+
+  "SignInSignUpComponent": {
+    "Label": {
+      "CheckEmailCodeResetPassword": "Verifiue o seu email e insira o código para redefinir a sua palavra-chave",
+      "Code": "Código",
+      "ForgotPassword": "Esqueceu-se da palavra-chave?",
+      "Login": "Entrar",
+      "Register": "Registar",
+      "ResetYourPassword": "Redefinir Palavra-chave",
+      "SendPasswordResetEmail": "Enviar Email Redefinição de Palavra-chave",
+      "SignIn": "Entrar",
+      "SignUp": "Registar",
+      "Submit": "Submeter"
+    },
+    "Message": {
+      "AccountCreatedCheckEmail": "Conta criada. Verique o seu email por favor.",
+      "EmailRequired": "Email é obrigatório!",
+      "ErrorLoginUser": "Erro ao logar utilizador",
+      "ErrorRegisteringUser": "Erro ao registar utilizador",
+      "IncorrectData": "Dados incorretos",
+      "InvalidCode": "Código inválido!",
+      "InvalidPassword": "Palavra-chave inválida!",
+      "LoginSuccessfull": "Login com sucesso",
+      "NameRequired": "Nome é obrigatório!",
+      "PasswordMinLenght": "Palavra-chave deve ter pelo menos 8 caracteres!"
+    }
+  },
+
+  "Shared": {
+    "Label": {
+      "Accept": "Aceite",
+      "Active": "Ativo",
+      "Add": "Adicionar",
+      "AppName": "PC4MT",
+      "Autorized": "Autorizado",
+      "Cancel": "Cancelar",
+      "Confirm": "Confirmar",
+      "Create": "Criar",
+      "Description": "Descrição",
+      "Download": "Download",
+      "Email": "Email",
+      "Language1": "Língua 1",
+      "Language2": "Língua 2",
+      "Name": "Nome",
+      "NoAutorized": "Não autorizado",
+      "Password": "Palavra-chave",
+      "Pending": "Pendente",
+      "ProficiencyLanguages": "Proficiência de Línguas",
+      "ProjectOwner": "Coordenador do projeto",
+      "ProjectDetail": "Detalhe do projeto",
+      "Projects": "Projetos",
+      "Save": "Guardar",
+      "Search": "Pesquisar",
+      "Select": "Selecionar",
+      "SelectLanguage": "Selecionar língua",
+      "SelectLanguage1": "Selecionar língua 1",
+      "SelectLanguage2": "Selecionar língua 2",
+      "SelectLanguages": "Selecionar línguas",
+      "SelectProject": "Selecionar projeto",
+      "Rejected": "Rejeitado",
+      "Translate": "Traduzir",
+      "Users": "Utilizadores"
+    },
+    "Message": {
+      "IncorrectData": "Informação incorreta",
+      "EmailAlredyExists": "O email pertence já a outro utilizador!",
+      "EmailNoExits": "o email não pertence a nenhum utilizador!",
+      "ErrorLoading": "Erro ao carregar informação",
+      "InvalidEmail": "Email inválido!",
+      "RequiredField": "Campo de preenchimento obrigatório!"
+    }
+  }
+}

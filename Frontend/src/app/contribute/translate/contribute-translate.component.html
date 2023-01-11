@@ -1,0 +1,155 @@
+<div *ngIf="([router.url, contributeService.projectControl.value] | functionCall:showButtonImport:this) === true"
+     class="offset-3 col-3 position-absolute top-119">
+  <input #fileInput
+         class="invisible choose-file"
+         type="file"
+         accept=".txt"
+         [formControl]="contributeService?.fileImportControl" />
+  <button class="btn-sm btn-primary ml-1"
+          (click)="fileInput.click()">
+    <i class="fa fa-upload" aria-hidden="true"></i> {{ 'ContributeComponent.Label.ChooseFile' | translate }}
+  </button>
+</div>
+
+<div class="row m-0 px-2">
+  <!-- L1 -->
+  <div class="col p-0 d-flex">
+    <dx-select-box class="form-control"
+                   [dataSource]="[contributeService?.languagesList, language2Control.value] | functionCall:removeLanguage:this"
+                   valueExpr="id"
+                   displayExpr="name"
+                   placeholder="{{ 'Shared.Label.SelectLanguage1' | translate }}"
+                   [showClearButton]="true"
+                   [formControl]="language1Control">
+    </dx-select-box>
+  </div>
+
+  <div class="col-1 d-flex align-items-end justify-content-center">
+    <i class="fa fa-arrow-circle-right fa-2x text-color" aria-hidden="true"> </i>
+  </div>
+
+  <!-- L2 -->
+  <div class="col p-0 d-flex">
+    <dx-select-box class="form-control"
+                   [dataSource]="[contributeService?.languagesList, language1Control.value] | functionCall:removeLanguage:this"
+                   valueExpr="id"
+                   displayExpr="name"
+                   placeholder="{{ 'Shared.Label.SelectLanguage2' | translate }}"
+                   [showClearButton]="true"
+                   [formControl]="language2Control">
+    </dx-select-box>
+  </div>
+</div>
+
+<div class="row m-0 p-2">
+  <div class="col p-0">
+    <input class="form-control"
+           type="text"
+           [formControl]="searchSentenceL1Control"
+           placeholder="{{ 'Shared.Label.Search' | translate }}">
+  </div>
+  <div class="col-1">
+    <button class="btn btn-primary w-100"
+            [disabled]="!language1Control.value || !language2Control.value || contributeService.sentenceSelect"
+            (click)="onClickNewLine()">
+      <i class="fa fa-plus mr-1" aria-hidden="true"></i>
+      <i class="fa fa-list" aria-hidden="true"></i>
+    </button>
+  </div>
+  <div class="col p-0">
+    <input class="form-control"
+           type="text"
+           [formControl]="searchSentenceL2Control"
+           placeholder="{{ 'Shared.Label.Search' | translate }}">
+  </div>
+</div>
+
+<div class="height-list w-100 pl-2 pr-scroll position-relative">
+  <virtual-scroller #scroll
+                    class="h-100 w-100"
+                    [ngClass]="{'overflow-hidden': contributeService.sentenceSelect}"
+                    [enableUnequalChildrenSizes]="true"
+                    [items]="[listSentencesSpokenLanguage, searchSentenceL1Control.value, searchSentenceL2Control.value] | functionCall:filterListSentencesSpokenLanguage:this">
+
+    <app-contribute-translate-lista-item *ngFor="let item of scroll.viewPortItems;"
+                                         [item]="item"
+                                         [language1]="language1Control.value"
+                                         [language2]="language2Control.value"
+                                         [searchL1]="searchSentenceL1Control"
+                                         [searchL2]="searchSentenceL2Control"
+                                         (deleteItem)="onDeleteItem($event)">
+    </app-contribute-translate-lista-item>
+  </virtual-scroller>
+  <ngx-spinner [fullScreen]="false"
+               type="ball-clip-rotate-pulse"></ngx-spinner>
+</div>
+
+<dx-popup *ngIf="proficiencyLanguage"
+          [width]="500"
+          [height]="250"
+          [showTitle]="true"
+          title="{{ 'ContributeComponent.Label.MissingLevelLanguageProficiency' | translate }}"
+          [dragEnabled]="false"
+          [closeOnOutsideClick]="false"
+          [(visible)]="popupVisible"
+          (onHidden)="onHiddenPopup()">
+  <div *dxTemplate="let data of 'content'">
+    <p>
+      <span>{{ 'ContributeComponent.Label.InsertLevelLanguageProficiency' | translate }}<b>{{languageMissingLevelProficiency?.name}}</b></span>:
+    </p>
+
+    <dx-slider [min]="0"
+               [max]="10"
+               [(value)]="proficiencyLanguage.levelProficiency">
+      <dxo-tooltip [enabled]="true"
+                   showMode="always"
+                   position="bottom"></dxo-tooltip>
+    </dx-slider>
+
+    <button class="btn btn-primary col-12 mt-5"
+            (click)="saveLanguageProficiency()">
+      {{ 'Shared.Label.Save' | translate }}
+    </button>
+  </div>
+</dx-popup>
+
+<dx-popup [width]="'60%'"
+          [height]="'90%'"
+          [showTitle]="true"
+          title="{{'ContributeComponent.Label.InsertSentencesConfirmation' | translate}}"
+          [dragEnabled]="false"
+          [closeOnOutsideClick]="false"
+          [showCloseButton]="false"
+          [(visible)]="popupFileImportVisible">
+  <div *dxTemplate="let data of 'content'"
+       (dxmousewheel)="$event.stopPropagation()"
+       (mousewheel)="$event.stopPropagation()">
+    <div class="container-body-popup border-top">
+      <virtual-scroller #scroll
+                        class="h-100 w-100 scrollbar-trach-white"
+                        [items]="sentencesToImport">
+        <div *ngFor="let item of scroll.viewPortItems;"
+             class="row m-0 d-flex align-items-center lista-item border-bottom">
+          <div class="col-12">
+            {{item.text}}
+          </div>
+        </div>
+      </virtual-scroller>
+    </div>
+
+    <div class="row position-absolute m-0 py-2 popup-buttons border-top">
+      <div class="col-6">
+        <button class="btn btn-danger w-100"
+                (click)="onCancel()">
+          {{ 'Shared.Label.Cancel' | translate }}
+        </button>
+      </div>
+      <div class="col-6">
+        <button class="btn btn-primary w-100"
+                (click)="onSave()">
+          {{ 'Shared.Label.Confirm' | translate }}
+        </button>
+      </div>
+    </div>
+  </div>
+</dx-popup>

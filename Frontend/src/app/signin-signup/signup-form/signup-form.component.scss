@@ -1,0 +1,30 @@
+.container-form {
+  padding-left: 90px;
+  font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-size: 26px;
+  
+}
+
+.border-header {
+  border: 1px solid #001f3f;
+  border-radius: 0.25em;
+}
+
+.list-item {
+  border-top: 1px solid #001f3f;
+
+  .levelProficiencyValue {
+    border: 1px solid #001f3f;
+    border-radius: 0.25em;
+    height: 35px;
+    opacity: 0.5
+  }
+
+  button {
+    height: 35px;
+  }
+}
+
+.heiht-38 {
+  height: 38px;
+}

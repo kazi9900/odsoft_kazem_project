@@ -1,0 +1,134 @@
+<button *ngIf="!downloadSettings"
+        class="btn btn-primary position-absolute btn-add"
+        [disabled]="isBusy"
+        (click)="onOpenPopupForm()">
+  <i class="fa fa-plus-square"
+     aria-hidden="true"></i> {{'Add'}}
+</button>
+
+<div class="w-100 h-100">
+  <div class="p-scroll">
+    <div class="row m-0 border-bottom bg-white lista-row-header">
+      <div class="col-3 d-flex align-items-center border-right">
+        <b>{{'Maximum number of sentences per download'}}</b>
+      </div>
+      <div class="col-3 d-flex align-items-center border-right">
+        <b>{{'Maximum number of sentences per user'}}</b>
+      </div>
+      <div class="col-3 d-flex align-items-center border-right">
+        <b>{{'Maximum number of sentences per L1/L2'}}</b>
+      </div>
+      <div class="col-3 d-flex align-items-center">
+        <b>{{'Maximum number of downloads per user'}}</b>
+      </div>
+    </div>
+  </div>
+
+  <div class="container-list bg-white position-relative">
+    <div *ngIf="downloadSettings"
+         class="row m-0 border-bottom lista-item"
+         [ngClass]="{'lista-item-selected': popupVisible}"
+         (click)="onOpenPopupForm()">
+      <div class="col-3 d-flex align-items-center border-right">
+        <span *ngIf="downloadSettings?.maxSentencesPerDownload !== null">{{ downloadSettings?.maxSentencesPerDownload }}</span>
+        <span *ngIf="downloadSettings?.maxSentencesPerDownload === null">{{ 'Unlimited' }}</span>
+      </div>
+      <div class="col-3 d-flex align-items-center border-right">
+        <span *ngIf="downloadSettings?.maxSentencesPerUser !== null">{{ downloadSettings?.maxSentencesPerUser }}</span>
+        <span *ngIf="downloadSettings?.maxSentencesPerUser === null">{{ 'Unlimited' }}</span>
+      </div>
+      <div class="col-3 d-flex align-items-center border-right">
+        <span *ngIf="downloadSettings?.maxSentencesL1L2 !== null">{{ downloadSettings?.maxSentencesL1L2 }}</span>
+        <span *ngIf="downloadSettings?.maxSentencesL1L2 === null">{{ 'Unlimited' }}</span>
+      </div>
+      <div class="col-3 d-flex align-items-center">
+        <span *ngIf="downloadSettings?.maxDownloadsPerUser !== null">{{ downloadSettings?.maxDownloadsPerUser }}</span>
+        <span *ngIf="downloadSettings?.maxDownloadsPerUser === null">{{ 'Unlimited' }}</span>
+      </div>
+    </div>
+
+    <ngx-spinner [fullScreen]="false"
+                 type="ball-clip-rotate-pulse"></ngx-spinner>
+  </div>
+</div>
+
+<dx-popup [width]="500"
+          [height]="310"
+          [showTitle]="true"
+          title="{{'Download settigns'}}"
+          [dragEnabled]="false"
+          [closeOnOutsideClick]="false"
+          [showCloseButton]="false"
+          [(visible)]="popupVisible">
+  <div *dxTemplate="let data of 'content'">
+    <ng-container *ngIf="!isBusy && form">
+      <div class="container-form"
+           [formGroup]="form">
+        <dx-scroll-view direction="vertical">
+
+          <div class="row m-0 mb-2 d-flex align-items-center">
+            <div class="col-9">
+              {{'Maximum number of sentences per download'}}
+            </div>
+            <div class="col-3">
+              <input class="form-control"
+                     type="number"
+                     formControlName="maxDownloadsPerUser">
+            </div>
+          </div>
+
+          <div class="row m-0 mb-2 d-flex align-items-center">
+            <div class="col-9">
+              {{'Maximum number of sentences per user'}}
+            </div>
+            <div class="col-3">
+              <input class="form-control"
+                     type="number"
+                     formControlName="maxSentencesL1L2">
+            </div>
+          </div>
+
+          <div class="row m-0 mb-2 d-flex align-items-center">
+            <div class="col-9">
+              {{'Maximum number of sentences per L1/L2'}}
+            </div>
+            <div class="col-3">
+              <input class="form-control"
+                     type="number"
+                     formControlName="maxSentencesPerDownload">
+            </div>
+          </div>
+
+          <div class="row m-0 mb-2 d-flex align-items-center">
+            <div class="col-9">
+              {{'Maximum number of downloads per user'}}
+            </div>
+            <div class="col-3">
+              <input class="form-control"
+                     type="number"
+                     formControlName="maxSentencesPerUser">
+            </div>
+          </div>
+
+        </dx-scroll-view>
+
+      </div>
+
+
+      <div class="row position-absolute m-0 py-2 popup-buttons">
+        <div class="col-6">
+          <button class="btn btn-danger w-100"
+                  (click)="onCancel()">
+            Cancel
+          </button>
+        </div>
+        <div class="col-6">
+          <button class="btn btn-primary w-100"
+                  (click)="onSave()">
+            Save
+          </button>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</dx-popup>

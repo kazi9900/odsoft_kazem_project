@@ -1,0 +1,249 @@
+<div class="pl-2 position-absolute btn-add">
+  <button type="button"
+          class="btn btn-primary mr-2"
+          [disabled]="isBusy"
+          (click)="createProject()">
+    {{ 'Shared.Label.Create' | translate }}
+  </button>
+  <button type="button"
+          class="btn btn-primary"
+          [disabled]="isBusy"
+          (click)="addProject()">
+    {{ 'Shared.Label.Add' | translate }}
+  </button>
+</div>
+
+<div class="pb-2 pl-2 pr-s">
+
+  <div class="w-100">
+    <div class="p-scroll invisible-background">
+      <div class="row m-0 border-bottom bg-white lista-row-header">
+        <div class="col-3 d-flex align-items-center"><b>{{ 'Shared.Label.Name' | translate }}</b></div>
+        <div class="col-3 d-flex align-items-center border-left"><b>{{ 'Shared.Label.Description' | translate }}</b></div>
+        <div class="col-3 d-flex align-items-center border-left"><b>{{ 'ContributeComponent.Label.Language1Language2' | translate }}</b></div>
+        <div class="col-3 d-flex align-items-center border-left"><b>{{ 'ContributeComponent.Label.Info' | translate }}</b></div>
+      </div>
+    </div>
+
+    <div class="position-relative">
+
+      <virtual-scroller #scroll
+                        class="height-list w-100"
+                        [items]="listUserProjects">
+
+        <div *ngFor="let item of scroll.viewPortItems;"
+             class="row m-0 lista-item white-background border-bottom"
+             [ngClass]="{'lista-item-selected': currentProject === item.project}"
+             (click)="onSelectItem(item.isprojectOwner ? item.project : null)">
+
+          <div class="col-3 d-flex align-items-center">
+            {{item?.project?.name}}
+            <ng-container *ngIf="item.isprojectOwner">
+              <span class="badge badge-success ml-1">{{[item?.project?.projectUsers, true] | functionCall:countUsersInState:this}}</span>
+              <span class="badge badge-danger ml-1">{{[item?.project?.projectUsers, false] | functionCall:countUsersInState:this}}</span>
+              <span class="badge badge-warning ml-1">{{[item?.project?.projectUsers, null] | functionCall:countUsersInState:this}}</span>
+            </ng-container>
+          </div>
+
+          <div class="col-3 d-flex align-items-center border-left">{{item?.project?.description}}</div>
+
+          <div class="col-3 d-flex align-items-center border-left">
+            {{item?.project?.language1Name + ' --> ' + item?.project?.language2Name}}
+            <span class="badge ml-auto"
+                  [ngClass]="{'badge-secondary': !item?.project?.countSentencesL1,
+                            'badge-success': item?.project?.countSentencesL1  && item?.project?.countSentencesL1 === item?.project?.countSentencesL1WithTranslation,
+                            'badge-danger': item?.project?.countSentencesL1  && item?.project?.countSentencesL1 !== item?.project?.countSentencesL1WithTranslation}">
+              {{item?.project?.countSentencesL1WithTranslation + '/' + item?.project?.countSentencesL1}}
+            </span>
+          </div>
+
+          <div class="col-3 d-flex align-items-center border-left">
+            <ng-container *ngIf="!item.isprojectOwner">
+              <span *ngIf="item?.isAutorized === true"
+                    class="badge badge-success">{{ 'Shared.Label.Accept' | translate }}</span>
+              <span *ngIf="item?.isAutorized === false"
+                    class="badge badge-danger">{{ 'Shared.Label.Rejected' | translate }}</span>
+              <span *ngIf="item?.isAutorized === null"
+                    class="badge badge-warning">{{ 'Shared.Label.Pending' | translate }}</span>
+            </ng-container>
+            <span *ngIf="item?.isprojectOwner"
+                  class="badge badge-info">{{ 'Shared.Label.ProjectOwner' | translate }}</span>
+          </div>
+
+        </div>
+      </virtual-scroller>
+
+      <ngx-spinner [fullScreen]="false"
+                   type="ball-clip-rotate-pulse"></ngx-spinner>
+    </div>
+  </div>
+
+</div>
+
+<dx-popup [width]="'60%'"
+          [height]="'90%'"
+          [showTitle]="true"
+          title="{{ 'Shared.Label.ProjectDetail' | translate }}"
+          [dragEnabled]="false"
+          [closeOnOutsideClick]="false"
+          [showCloseButton]="false"
+          [(visible)]="popupVisible">
+  <div *dxTemplate="let data of 'content'">
+    <ng-container *ngIf="!isBusy && form">
+      <div class="container-form"
+           [formGroup]="form">
+
+        <dx-scroll-view direction="vertical">
+          <div class="row m-0 mb-2 d-flex align-items-center pt-2">
+            <div class="col-4">
+              {{ 'Shared.Label.Name' | translate }}
+            </div>
+            <div class="col-8">
+              <input *ngIf="currentProject"
+                     class="form-control"
+                     type="text"
+                     formControlName="name">
+              <dx-select-box *ngIf="currentUserProject"
+                             class="form-control"
+                             [dataSource]="contributeService?.projectsList | functionCall:filterProjects:this"
+                             valueExpr="id"
+                             displayExpr="name"
+                             [showClearButton]="true"
+                             placeholder="{{ 'Shared.Label.Select' | translate }}"
+                             formControlName="id">
+              </dx-select-box>
+            </div>
+          </div>
+
+          <div class="row m-0 mb-2 d-flex align-items-center">
+            <div class="col-4">
+              {{ 'Shared.Label.Description' | translate }}
+            </div>
+            <div class="col-8">
+              <input class="form-control"
+                     type="text"
+                     formControlName="description">
+            </div>
+          </div>
+
+          <div class="row m-0 mb-2 d-flex align-items-center">
+            <div class="col-4">
+              {{ 'Shared.Label.Language1' | translate }}
+            </div>
+            <div class="col-8">
+              <dx-select-box class="form-control"
+                             [dataSource]="[contributeService?.languagesList, form?.controls?.language2Id?.value] | functionCall:removeLanguage:this"
+                             valueExpr="id"
+                             displayExpr="name"
+                             [showClearButton]="true"
+                             placeholder="{{ 'Shared.Label.Select' | translate }}"
+                             formControlName="language1Id">
+              </dx-select-box>
+              <div *ngIf="isFormSubmitted && form.get('language1Id').hasError('required')"
+                   class="alert alert-danger mt-1 mb-0 p-1">
+                {{ 'Shared.Message.RequiredField' | translate }}
+              </div>
+            </div>
+          </div>
+
+          <div class="row m-0 mb-2 d-flex align-items-center">
+            <div class="col-4">
+              {{ 'Shared.Label.Language2' | translate }}
+            </div>
+            <div class="col-8">
+              <dx-select-box class="form-control"
+                             [dataSource]="[contributeService?.languagesList, form?.controls?.language1Id?.value] | functionCall:removeLanguage:this"
+                             valueExpr="id"
+                             displayExpr="name"
+                             [showClearButton]="true"
+                             placeholder="{{ 'Shared.Label.Select' | translate }}"
+                             formControlName="language2Id">
+              </dx-select-box>
+              <div *ngIf="isFormSubmitted && form.get('language2Id').hasError('required')"
+                   class="alert alert-danger mt-1 mb-0 p-1">
+                {{ 'Shared.Message.RequiredField' | translate }}
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="currentProject"
+               class="row m-0 mb-2 d-flex align-items-center">
+            <div class="col-4">
+              {{ 'Shared.Label.Active' | translate }}
+            </div>
+            <div class="col-8">
+              <dx-check-box class="container-check w-100"
+                            formControlName="active"
+                            text="Yes"></dx-check-box>
+            </div>
+          </div>
+
+          <!-- ProjectUsers -->
+          <div *ngIf="currentProject"
+               class="col-12 form-group">
+            <div class="border">
+              <div class="col-12 d-flex align-items-center p-2">
+                <label class="m-0">
+                  {{ 'Shared.Label.Users' | translate }}
+                </label>
+              </div>
+
+              <div formArrayName="projectUsers">
+                <div *ngFor="let item of formArrayProjectUsersControls(); let i = index;"
+                     [formGroupName]="i"
+                     class="list-item border-top">
+                  <div class="d-flex align-items-center justify-content-center p-2">
+                    <div class="col-5 pl-0">
+
+                      <span *ngIf="item?.get('userName')?.value">{{ item?.get('userName')?.value }}</span>
+                      <dx-select-box *ngIf="!item?.get('userName')?.value"
+                                     class="form-control"
+                                     [dataSource]="[listUsers, i] | functionCall:filterUsers:this"
+                                     valueExpr="id"
+                                     displayExpr="name"
+                                     placeholder="{{ 'Shared.Label.Select' | translate }}"
+                                     formControlName="userId">
+                      </dx-select-box>
+
+                    </div>
+                    <div class="col-3">
+                      <dx-check-box formControlName="isprojectOwner"
+                                    text="{{ 'Shared.Label.ProjectOwner' | translate }}"></dx-check-box>
+                    </div>
+                    <div class="col-3">
+                      <dx-radio-group [dataSource]="radioButtonItems"
+                                      displayExpr="text"
+                                      valueExpr="value"
+                                      formControlName="isAutorized"
+                                      layout="horizontal">
+                      </dx-radio-group>
+                    </div>
+                    <div class="col-1 pr-0">
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </dx-scroll-view>
+
+      </div>
+
+      <div class="row position-absolute m-0 py-2 popup-buttons">
+        <div class="col-6">
+          <button class="btn btn-danger w-100"
+                  (click)="onCancel()">
+            {{ 'Shared.Label.Cancel' | translate }}
+          </button>
+        </div>
+        <div class="col-6">
+          <button class="btn btn-primary w-100"
+                  (click)="onSave()">
+            {{ 'Shared.Label.Save' | translate }}
+          </button>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</dx-popup>

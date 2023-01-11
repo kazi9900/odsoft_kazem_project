@@ -1,0 +1,10 @@
+.container-maintenance {
+  height: calc(100vh - 110px);
+  overflow-y: hidden;
+
+  .container-maintenance-body {
+    height: calc(100% - 54px);
+    padding-right: 3px;
+    overflow: hidden,
+  }
+}

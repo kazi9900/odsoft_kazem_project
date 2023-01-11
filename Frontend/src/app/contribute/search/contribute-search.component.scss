@@ -1,0 +1,22 @@
+@import "../../../styles";
+
+@media screen and (min-height: 451px) {
+  .height-list {
+    height: calc(100vh - (#{$height-nav-bar} + (2 * #{$height-btn}) + (5 * #{$p-2}) + #{$height-input} + #{$p-1}));
+  }
+}
+
+@media screen and (max-height: 450px) {
+  .height-list {
+    height: $height-list-responsive;
+  }
+}
+
+virtual-scroller {
+  background: white;
+  overflow-y: scroll !important;
+}
+
+.text-color {
+  color: #999;
+}

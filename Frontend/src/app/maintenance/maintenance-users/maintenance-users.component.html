@@ -1,0 +1,172 @@
+<button class="btn btn-primary position-absolute btn-add"
+        [disabled]="true">
+  <i class="fa fa-plus-square"
+     aria-hidden="true"></i> {{'Add'}}
+</button>
+
+<div class="w-100 h-100">
+  <div class="p-scroll">
+    <div class="row m-0 border-bottom bg-white lista-row-header">
+      <div class="col-5 d-flex align-items-center border-right">
+        <b>{{'Name'}}</b>
+      </div>
+      <div class="col-5 d-flex align-items-center border-right">
+        <b>{{'Email'}}</b>
+      </div>
+      <div class="col-2 d-flex align-items-center border-right">
+        <b>{{'Role'}}</b>
+      </div>
+    </div>
+  </div>
+
+  <div class="container-list bg-white position-relative">
+    <div *ngFor="let user of listUsers"
+         class="row m-0 border-bottom lista-item"
+         [ngClass]="{'lista-item-selected': currentUser === user}"
+         (click)="onSelectItem(user)">
+      <div class="col-5 d-flex align-items-center border-right">
+        {{user?.name}}
+      </div>
+      <div class="col-5 d-flex align-items-center border-right">
+        {{user?.email}}
+      </div>
+      <div class="col-2 d-flex align-items-center border-right">
+        {{user?.userRoles[0]?.roleName}}
+      </div>
+    </div>
+
+    <ngx-spinner [fullScreen]="false"
+                 type="ball-clip-rotate-pulse"></ngx-spinner>
+  </div>
+</div>
+
+<dx-popup [width]="'60%'"
+          [height]="'90%'"
+          [showTitle]="true"
+          title="{{'User Detail'}}"
+          [dragEnabled]="false"
+          [closeOnOutsideClick]="false"
+          [showCloseButton]="false"
+          [(visible)]="popupVisible">
+  <div *dxTemplate="let data of 'content'">
+    <ng-container *ngIf="!isBusy && form">
+      <div class="container-form"
+           [formGroup]="form">
+
+        <dx-scroll-view direction="vertical">
+
+          <div class="row m-0 mb-2 d-flex align-items-center">
+            <div class="col-4">
+              {{'Name'}}
+            </div>
+            <div class="col-8">
+              <input class="form-control"
+                     type="text"
+                     formControlName="name">
+            </div>
+          </div>
+
+          <div class="row m-0 mb-2 d-flex align-items-center">
+            <div class="col-4">
+              {{'Email'}}
+            </div>
+            <div class="col-8">
+              <input class="form-control"
+                     type="text"
+                     formControlName="email">
+            </div>
+          </div>
+
+          <div class="row m-0 mb-2 d-flex align-items-center">
+            <div class="col-4">
+              {{'Role'}}
+            </div>
+            <div class="col-8">
+              <dx-select-box class="form-control"
+                             [dataSource]="listRoles"
+                             valueExpr="id"
+                             displayExpr="name"
+                             placeholder="Selecionar"
+                             formControlName="roleId">
+              </dx-select-box>
+            </div>
+          </div>
+
+        </dx-scroll-view>
+
+        <!-- ProjectUsers -->
+        <!--<div class="col-12 form-group">
+          <div class="border">
+            <div class="col-12 d-flex align-items-center p-2">
+              <label class="m-0">
+                {{ 'Users' }}
+              </label>
+              <button type="button"
+                      class="btn btn-outline-primary ml-auto"
+                      (click)="addProjectUser()"
+                      [disabled]="!form?.controls['projectUsers'].valid">
+                {{ 'SHARED.Label.Add' | translate }}
+              </button>
+            </div>
+
+            <div formArrayName="projectUsers">
+              <div *ngFor="let item of formArrayProjectUsersControls(); let i = index;"
+                   [formGroupName]="i"
+                   class="list-item border-top">
+                <div class="d-flex align-items-center justify-content-center p-2">
+                  <div class="col-5 pl-0">
+
+                    <span *ngIf="item?.get('userName')?.value">{{ item?.get('userName')?.value }}</span>
+                    <dx-select-box *ngIf="!item?.get('userName')?.value"
+                                   class="form-control"
+                                   [dataSource]="[listUsers, i] | functionCall:filterUsers:this"
+                                   valueExpr="id"
+                                   displayExpr="name"
+                                   placeholder="Selecionar"
+                                   formControlName="userId">
+                    </dx-select-box>
+
+                  </div>
+                  <div class="col-3">
+                    <dx-check-box formControlName="isprojectOwner"
+                                  text="Project Owner"></dx-check-box>
+                  </div>
+                  <div class="col-3">
+                    <dx-check-box formControlName="isAutorized"
+                                  text="Autorized"></dx-check-box>
+                  </div>
+                  <div class="col-1 pr-0">
+                    <button *ngIf="!item?.get('userName')?.value"
+                            type="button"
+                            class="btn btn-outline-danger w-100"
+                            (click)="removeProjectUser(i)">
+                      <i class="fa fa-trash"
+                         aria-hidden="true"></i>
+                    </button>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>-->
+
+      </div>
+
+      <div class="row position-absolute m-0 py-2 popup-buttons">
+        <div class="col-6">
+          <button class="btn btn-danger w-100"
+                  (click)="onCancel()">
+            Cancel
+          </button>
+        </div>
+        <div class="col-6">
+          <button class="btn btn-primary w-100"
+                  (click)="onSave()">
+            Save
+          </button>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</dx-popup>
